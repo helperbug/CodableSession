@@ -5,6 +5,11 @@ import PackageDescription
 
 let package = Package(
     name: "CodableSession",
+    platforms: [
+        .macOS(.v12),
+        .iOS(.v15),
+        .tvOS(.v15)
+    ],
     products: [
         .library(
             name: "CodableSession",

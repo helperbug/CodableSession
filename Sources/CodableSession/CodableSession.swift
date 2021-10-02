@@ -8,8 +8,6 @@ public struct CodableSessionLibrary {
 }
 
 /// Codable request wraps URLSession with a JSON Decoder and flattens out all possible errors into one type. The coding tactics used were to avoid the pyrimid of death that is typical when using http request and json.
-@available(macOS 12.0, *)
-@available(iOS 15.0, *)
 public struct CodableRequest {
     /*
      The user and pass can be used to form a basic authorization header using base64 encoding. Similarly, user agent will form a User-Agent header field.

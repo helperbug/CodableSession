@@ -1,12 +1,12 @@
 // MIT License
 // Copyright (c) 2021 Ben Waidhofer
 
+import SwiftUI
 import Foundation
 import XCTest
+
 @testable import CodableSession
 
-@available(macOS 12.0, *)
-@available(iOS 15.0, *)
 final class CodableSessionTests: XCTestCase {
     func testVersion() throws {
         XCTAssertEqual(CodableSessionLibrary().version, "0.0.1")
@@ -15,7 +15,7 @@ final class CodableSessionTests: XCTestCase {
     func testGet() throws {
         let getExpectation = expectation(description: "get an item and then an array of items")
 
-        Task {
+        Task.detached(priority: .userInitiated) {
             let decoded : TestModel = try await CodableRequest().get("https://jsonplaceholder.typicode.com/posts/1")
             XCTAssert(decoded.userId == 1)
             XCTAssert(decoded.id == 1)
@@ -33,7 +33,7 @@ final class CodableSessionTests: XCTestCase {
     func testDelete() throws {
         let getExpectation = expectation(description: "delete an item")
 
-        Task {
+        Task.detached(priority: .userInitiated) {
             try await CodableRequest().delete("https://jsonplaceholder.typicode.com/posts/1")
             getExpectation.fulfill()
         }
@@ -44,7 +44,7 @@ final class CodableSessionTests: XCTestCase {
     func testPost() throws {
         let postExpectation = expectation(description: "Post an item with one model and get back a different model")
 
-        Task {
+        Task.detached(priority: .userInitiated) {
             let payload = CreateTestModel(1, "foo", "bar")
             do {
                 let decoded : CreateedTestModel = try await CodableRequest().post("https://jsonplaceholder.typicode.com/posts", payload)
